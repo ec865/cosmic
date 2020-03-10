@@ -1,4 +1,5 @@
 import java.io.FileNotFoundException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -6,20 +7,8 @@ import java.io.File;
 
 public class Parser {
 
-    private ArrayList<ArrayList<String>> classNames;
-    private ArrayList<ArrayList<String>> classAttributes;
-    private ArrayList<ArrayList<String>> methodNames;
-    private ArrayList<ArrayList<String>> methodAttributes;
-    private ArrayList<ArrayList<String>> argNames;
-    private ArrayList<ArrayList<String>> argTypes;
-    private ArrayList<ArrayList<String>> returnType;
-    private ArrayList<Integer> hasCodes;
+    private ArrayList<Interaction> interactions;
     private String file;
-
-    public static void main(String[] args){
-        Parser parser = new Parser("src/input/output.txt"); //Buraya sequence diagram plugin'in çıktısının konumunu veriyoruz
-        System.out.println(parser);
-    }
 
     public Parser(String path){
         try {
@@ -29,88 +18,25 @@ public class Parser {
             e.printStackTrace();
             System.exit(1);
         }
-        classNames = getObjects(file, "_className", "_attributes");
-        classAttributes = getObjects(file, "_attributes", "_methodName");
-        methodNames = getObjects(file, "_methodName", "_attributes");
-        methodAttributes = getObjects(file, "_attributes", "_argNames");
-        argNames = getObjects(file, "_argNames", "_argTypes");
-        argTypes = getObjects(file, "_argTypes", "_returnType");
-        returnType = getObjects(file, "_returnType", "_hashCode");
-        hasCodes = getHashCodes(file);
+        interactions = createInteractions(file);
     }
 
     //Setter ve getterlar, özel bir şey yok
-
-    public ArrayList<ArrayList<String>> getClassNames() {
-        return classNames;
-    }
-
-    public ArrayList<ArrayList<String>> getClassAttributes() {
-        return classAttributes;
-    }
-
-    public ArrayList<ArrayList<String>> getMethodNames() {
-        return methodNames;
-    }
-
-    public ArrayList<ArrayList<String>> getMethodAttributes() {
-        return methodAttributes;
-    }
-
-    public ArrayList<ArrayList<String>> getArgNames() {
-        return argNames;
-    }
-
-    public ArrayList<ArrayList<String>> getArgTypes() {
-        return argTypes;
-    }
-
-    public ArrayList<ArrayList<String>> getReturnType() {
-        return returnType;
-    }
-
-    public ArrayList<Integer> getHasCodes() {
-        return hasCodes;
-    }
 
     public String getFile() {
         return file;
     }
 
-    public void setClassNames(ArrayList<ArrayList<String>> classNames) {
-        this.classNames = classNames;
-    }
-
-    public void setClassAttributes(ArrayList<ArrayList<String>> classAttributes) {
-        this.classAttributes = classAttributes;
-    }
-
-    public void setMethodNames(ArrayList<ArrayList<String>> methodNames) {
-        this.methodNames = methodNames;
-    }
-
-    public void setMethodAttributes(ArrayList<ArrayList<String>> methodAttributes) {
-        this.methodAttributes = methodAttributes;
-    }
-
-    public void setArgNames(ArrayList<ArrayList<String>> argNames) {
-        this.argNames = argNames;
-    }
-
-    public void setArgTypes(ArrayList<ArrayList<String>> argTypes) {
-        this.argTypes = argTypes;
-    }
-
-    public void setReturnType(ArrayList<ArrayList<String>> returnType) {
-        this.returnType = returnType;
-    }
-
-    public void setHasCodes(ArrayList<Integer> hasCodes) {
-        this.hasCodes = hasCodes;
-    }
-
     public void setFile(String file) {
         this.file = file;
+    }
+
+    public ArrayList<Interaction> getInteractions() {
+        return interactions;
+    }
+
+    public void setInteractions(ArrayList<Interaction> interactions) {
+        this.interactions = interactions;
     }
 
     public static String openFile(String path) throws FileNotFoundException { //Dosyayı açıp okumak için
@@ -182,17 +108,25 @@ public class Parser {
 
     //Örnek hashcode çıktısı
     // [-1, -1, -1, -1, -1, -1, -1, -1]
+    public static ArrayList<Interaction> createInteractions(String file){
+        ArrayList<ArrayList<String>> classNames = getObjects(file, "_className", "_attributes");
+        ArrayList<ArrayList<String>> classAttributes = getObjects(file, "_attributes", "_methodName");
+        ArrayList<ArrayList<String>> methodNames = getObjects(file, "_methodName", "_attributes");
+        ArrayList<ArrayList<String>> methodAttributes = getObjects(file, "_attributes", "_argNames");
+        ArrayList<ArrayList<String>> argNames = getObjects(file, "_argNames", "_argTypes");
+        ArrayList<ArrayList<String>> argTypes = getObjects(file, "_argTypes", "_returnType");
+        ArrayList<ArrayList<String>> returnType = getObjects(file, "_returnType", "_hashCode");
+        ArrayList<Integer> hasCodes = getHashCodes(file);
+        ArrayList<Interaction> interactions = new ArrayList<>();
+        for (int i = 0; i < classNames.size(); i++){
+            interactions.add(new Interaction(classNames.get(i).get(0),classAttributes.get(i),methodNames.get(i).get(0),methodAttributes.get(i),argNames.get(i),argTypes.get(i),returnType.get(i).get(0),hasCodes.get(i)));
+        }
+        return interactions;
+    }
 
     @Override
     public String toString() {
-        return  "classNames = " + classNames + "\n" +
-                "classAttributes = " + classAttributes + "\n" +
-                "methodNames = " + methodNames + "\n" +
-                "methodAttributes = " + methodAttributes + "\n" +
-                "argNames = " + argNames + "\n" +
-                "argTypes = " + argTypes + "\n" +
-                "returnType = " + returnType + "\n" +
-                "hasCodes = " + hasCodes;
+        return interactions.toString();
     }
 }
 
