@@ -1,0 +1,8 @@
+{"_classDescription":{"_className":"Main","_attributes":["public"]},"_methodName":"main","_attributes":["public","static"],"_argNames":["args"],"_argTypes":["java.lang.String[]"],"_returnType":"void","_hashCode":-1}
+    {"_classDescription":{"_className":"MailValidator","_attributes":["public"]},"_methodName":"new","_attributes":["public"],"_argNames":["input"],"_argTypes":["java.lang.String"],"_returnType":"MailValidator","_hashCode":-1}
+        {"_classDescription":{"_className":"MailValidator","_attributes":["public"]},"_methodName":"setInput","_attributes":["public"],"_argNames":["input"],"_argTypes":["java.lang.String"],"_returnType":"void","_hashCode":-1}
+    {"_classDescription":{"_className":"MailValidator","_attributes":["public"]},"_methodName":"check","_attributes":["public"],"_argNames":[],"_argTypes":[],"_returnType":"boolean","_hashCode":-1}
+        {"_classDescription":{"_className":"MailValidator","_attributes":["public"]},"_methodName":"getPattern","_attributes":["public"],"_argNames":[],"_argTypes":[],"_returnType":"java.lang.String","_hashCode":-1}
+        {"_classDescription":{"_className":"MailValidator","_attributes":["public"]},"_methodName":"getInput","_attributes":["public"],"_argNames":[],"_argTypes":[],"_returnType":"java.lang.String","_hashCode":-1}
+        {"_classDescription":{"_className":"MailValidator","_attributes":["public"]},"_methodName":"getPattern2","_attributes":["public"],"_argNames":[],"_argTypes":[],"_returnType":"java.lang.String","_hashCode":-1}
+        {"_classDescription":{"_className":"MailValidator","_attributes":["public"]},"_methodName":"getInput","_attributes":["public"],"_argNames":[],"_argTypes":[],"_returnType":"java.lang.String","_hashCode":-1}
