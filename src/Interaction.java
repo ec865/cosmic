@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
-public class Interaction {
+public class
+Interaction {
 
     private String className;
     private ArrayList<String> classAttributes;
