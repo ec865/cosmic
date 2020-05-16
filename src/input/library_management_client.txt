@@ -1,0 +1,7 @@
+{"_classDescription":{"_className":"Client.ClientMain","_attributes":["public"]},"_methodName":"main","_attributes":["public","static"],"_argNames":["args"],"_argTypes":["java.lang.String[]"],"_returnType":"void","_hashCode":-1}
+    {"_classDescription":{"_className":"ClientUI.ClientFrame","_attributes":["public"]},"_methodName":"new","_attributes":["public"],"_argNames":[],"_argTypes":[],"_returnType":"ClientUI.ClientFrame","_hashCode":-1}
+        {"_classDescription":{"_className":"ClientUI.ClientUI","_attributes":["public"]},"_methodName":"new","_attributes":["public"],"_argNames":[],"_argTypes":[],"_returnType":"ClientUI.ClientUI","_hashCode":-1}
+        {"_classDescription":{"_className":"ClientUI.ClientUI","_attributes":["public"]},"_methodName":"createUI","_attributes":["public"],"_argNames":[],"_argTypes":[],"_returnType":"void","_hashCode":-1}
+        {"_classDescription":{"_className":"Client.ClientActionListener","_attributes":["public"]},"_methodName":"new","_attributes":["public"],"_argNames":[],"_argTypes":[],"_returnType":"Client.ClientActionListener","_hashCode":-1}
+            {"_classDescription":{"_className":"Client.ClientNetworkSocket","_attributes":["public"]},"_methodName":"connectServer","_attributes":["public"],"_argNames":[],"_argTypes":[],"_returnType":"void","_hashCode":-1}
+        {"_classDescription":{"_className":"ClientUI.ClientUI","_attributes":["public"]},"_methodName":"addActionListener","_attributes":["public"],"_argNames":["l"],"_argTypes":["java.awt.event.ActionListener"],"_returnType":"void","_hashCode":-1}
