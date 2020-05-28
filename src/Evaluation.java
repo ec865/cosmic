@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class Evaluation {
     public static void main(String[] args) {
-        Parser parser = new Parser("src/input/addressbook.txt");
+        Parser parser = new Parser("src/input/mail_validator.txt");
         System.out.println(parser.getInteractions());
         ArrayList<String> unique_methods = new ArrayList<>();
         ArrayList<String> excludedMethods = excludedMethods();
@@ -30,7 +30,6 @@ public class Evaluation {
         ArrayList<String> excludedMethods = new ArrayList<>();
         System.out.println("Please write the methods to be excluded. This may increase the accuracy of the measurement.\nYou can write \"done\" to skip or end the entry.");
         String inputString = "";
-        //boolean endCondition = !inputString.toLowerCase().equals("done");
         while (!inputString.toLowerCase().equals("done")){
             Scanner input = new Scanner(System.in);
             inputString = input.nextLine();
