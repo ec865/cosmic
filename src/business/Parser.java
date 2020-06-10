@@ -23,27 +23,27 @@ public class Parser {
         this.interactions = interactions;
     }
 
-    public static ArrayList<ArrayList<String>> getObjects(String file, String startObject, String finishObject ) { //String'in içindeki verileri burada çekiyor
-        ArrayList<String> temp = new ArrayList<>();                                                                //start ve finish argümanları çekeceğimiz objenin yerini tam olarak göstermek için
-        ArrayList<ArrayList<String>> objectList = new ArrayList<>();                                               //Yalnız "_attributes" isminde iki tane değişken olduğu için sorun çıkıyor
-        String[] fileArray = file.split("\n");                                                              //Bu yüzden onlarla ilgili bir şey okunacağı zaman tersten okunuyor
-        if (finishObject.equals("_methodName") || finishObject.equals("_argNames")){ //Bu if tersten okunacakların kontrolü için var
-            for (int i = 0; i < fileArray.length;  i++) {                            //Çok güzel bir çözüm olmadı ama şu an için çalışıyor gibi
-                if (fileArray[i].equals(finishObject)) {                             //İleride burayı düzeltebiliriz
-                    int count = 0;      //Kaç defa geri gittiğimizi tutuyor ki en sonda i'yi tekrar olduğu yere geri götürebilelim
+    public static ArrayList<ArrayList<String>> getObjects(String file, String startObject, String finishObject ) { //Takes the data in the given string that contains file content
+        ArrayList<String> temp = new ArrayList<>();                                                                //startObject and finishObject indicates the locations of the data
+        ArrayList<ArrayList<String>> objectList = new ArrayList<>();                                               //Since there are two variables named "_attributes", this causes issue
+        String[] fileArray = file.split("\n");                                                              //That's why their data are read in reverse order
+        if (finishObject.equals("_methodName") || finishObject.equals("_argNames")){ //This if for the ones that need to be read in reverse order
+            for (int i = 0; i < fileArray.length;  i++) {
+                if (fileArray[i].equals(finishObject)) {
+                    int count = 0;      //Counts the number of times that we go back, to be able to point the i where it was
                     while (!fileArray[i-1].equals(startObject)){
                         temp.add(fileArray[i-1]);
                         i--;
                         count++;
                     }
-                    Collections.reverse(temp); //Tersten okuduğumuz için arraylist'e ters eklendi veriler. Onları burada olması gereken sıraya döndürüyoruz
+                    Collections.reverse(temp); //Since the data read in reverse order, we need to reverse the arraylist
                     objectList.add(temp);
                     temp = new ArrayList<>();
                     i += count;
                 }
             }
         }
-        else{                                                         //Burası normal sırada baştan sona kadar ekliyor. Bu yüzden "count" değişkenine ve reverse yapmaya gerek yok
+        else{                                                        //This for the data in normal order. That's why, no need for a count variable
             for (int i = 0; i < fileArray.length;  i++) {
                 if (fileArray[i].equals(startObject)) {
                     while (!fileArray[i+1].equals(finishObject)){
@@ -55,19 +55,10 @@ public class Parser {
                 }
             }
         }
-        return objectList; //Bu method'un iç içe iki arraylist döndürmesinin sebebi, okuduğumuz methodların birden fazla argümanı buna bağlı birden fazla argüman tipi olması durumunda bunları gruplamak
-                           //Bu sayede bütün arraylistlerin size'ı eşit olabiliyor. Bu size ise seqeunce diagramdaki interactionların sayısı. O da algoritmayı geliştirene kadar bizim o program için CFP ölçümümüz :)
-    }                      //Bu sebeple her zaman tekil olacak className, methodName gibi değerler de arraylist içinde olmuş oluyor.
-                           //Sonuç olarak her bir arraylistin aynı index'indeki değer sequence diagramdaki aynı interaction'a ait
-                           // Örneğin classNames.get(6).get(0) ile argNames.get(6) , 7. interaction'ın class adını ve ilgili methodun argümanlarının adını veriyor
-    //Örnek className çıktısı
-    // [[business.TextCorrectionApp], [business.EditingOperations], [business.TextSaver], [business.AutoCorrector], [business.Searcher], [business.Composite], [presentation.Menu], [dataaccess.FileOperations]]
+        return objectList;
+    }
 
-    //Örnek argNames çıktısı
-    // [[operation], [operation], [operation], [], [newValue, newFileName] [], [fileName], [newValue, newFileName]]
-    //Boş olanlar o methodun argümanı olmadığı anlamına geliyor.
-
-    public static ArrayList<Integer> getHashCodes(String file){ //Hash codelar ne kadar işimize yarar bilmiyorum ama integer olduğu için onları ayrı bir methodda alıyoruz
+    public static ArrayList<Integer> getHashCodes(String file){ //Hash codes taken in this method because it returns integer arraylist
         ArrayList<Integer> hashCodeList = new ArrayList<>();
         String[] fileArray = file.split("\n");
         for (int i = 0; i < fileArray.length;  i++) {
@@ -75,10 +66,10 @@ public class Parser {
                 hashCodeList.add(Integer.parseInt(fileArray[i+1]));
             }
         }
-        return hashCodeList;     //Bunun farkı ise direk integer arraylisti olarak sonuç döndürmesi. Yani diğerleri gibi iç içe bir yapı yok
+        return hashCodeList;
     }
 
-    public ArrayList<Interaction> createInteractions(String file){
+    public void createInteractions(String file){
         ArrayList<ArrayList<String>> classNames = getObjects(file, "_className", "_attributes");
         ArrayList<ArrayList<String>> classAttributes = getObjects(file, "_attributes", "_methodName");
         ArrayList<ArrayList<String>> methodNames = getObjects(file, "_methodName", "_attributes");
@@ -91,7 +82,6 @@ public class Parser {
         for (int i = 0; i < classNames.size(); i++){
             interactions.add(new Interaction(classNames.get(i).get(0),classAttributes.get(i),methodNames.get(i).get(0),methodAttributes.get(i),argNames.get(i),argTypes.get(i),returnType.get(i).get(0),hasCodes.get(i)));
         }
-        return interactions;
     }
 
     @Override

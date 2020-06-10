@@ -16,7 +16,7 @@ public class Evaluation {
 
     public ArrayList<String> getExcludedMethods(){
         ConsoleIO console = new ConsoleIO();
-        console.writeOutput("Please write the methods to be excluded. This may increase the accuracy of the measurement.\nYou can write \"done\" to skip or end the entry.");
+        console.writeOutput("Please write the methods to be excluded. This may increase the accuracy of the measurement.\nYou can write \"done\" or press enter to skip or end the entry.");
         excludedMethods = console.takeInput();
         return excludedMethods;
     }
@@ -25,7 +25,7 @@ public class Evaluation {
         unique_methods = new ArrayList<>();
         for (Interaction interaction : parser.getInteractions()){
             String method = interaction.getMethodName();
-            if (this.isExcludedMethodFound(method) && !unique_methods.contains(method) && !method.equals("main"))
+            if (this.isExcludedMethodFound(method) && !unique_methods.contains(method) && !method.equals("main") && !method.equals("new"))
                 unique_methods.add(method);
         }
         return unique_methods;
@@ -39,18 +39,18 @@ public class Evaluation {
         return true;
     }
 
-    public int size(){
+    public int result(){
         return unique_methods.size();
     }
 
     public void displayResults(){
-        System.out.println("\nMethods that are counted are below\n");
+        System.out.println("\nMethods that are counted are below.\n");
         int count = 1;
         for (String methodName : unique_methods){
             System.out.println(count + ") " + methodName);
             count++;
         }
-        System.out.println("\nTotal CFP is "+ this.size());
+        System.out.println("\nTotal CFP is "+ this.result());
     }
 
     public void start(){

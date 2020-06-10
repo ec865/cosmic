@@ -5,18 +5,16 @@ import java.util.Scanner;
 
 public class ConsoleIO {
 
-    private String inputString = "";
-
     public ConsoleIO() {
     }
 
     public ArrayList<String> takeInput(){
         Scanner input = new Scanner(System.in);
         ArrayList<String> inputs = new ArrayList<>();
-        while (!inputString.toLowerCase().equals("done") ){
+        String inputString = input.nextLine();
+        while (!inputString.toLowerCase().equals("done") && !inputString.toLowerCase().equals("") ){ //continue to take input until user writes "done" or presses enter
+            inputs.add(inputString);
             inputString = input.nextLine();
-            if (!inputString.toLowerCase().equals("done"))
-                inputs.add(inputString);
         }
         input.close();
         return inputs;

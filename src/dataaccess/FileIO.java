@@ -12,7 +12,7 @@ public class FileIO {
         try {
             this.openFile(path);
         } catch (FileNotFoundException e) {
-            System.err.println("Please enter the correct path");
+            System.err.println("No file found in the given location. Please enter the correct path.");
             e.printStackTrace();
             System.exit(1);
         }
@@ -27,7 +27,7 @@ public class FileIO {
         scanner.useDelimiter(":|,|\n");
         String fileString = "";
         while (scanner.hasNext()){
-            fileString = fileString.concat(scanner.next().replaceAll("[\\s+\"{}\\[\\]]","")+"\n"); //Gereksiz karakterlerden arındırıp alt alta string olarak kaydediyor
+            fileString = fileString.concat(scanner.next().replaceAll("[\\s+\"{}\\[\\]]","")+"\n"); //Gets rid of redundant characters
         }
         scanner.close();
         return fileString;
